@@ -1,0 +1,25 @@
+{
+  "name": "godot-cloud-kit",
+  "version": "0.1.0",
+  "description": "Reusable cloud-agent <-> browser bridge for building Godot games: headless builds/tests on the server, rendering and playtesting in the browser.",
+  "type": "module",
+  "bin": {
+    "gck": "cli/gck.js"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "mcp": "node mcp/server.js",
+    "test:e2e": "node test/e2e.js",
+    "player": "node scripts/headless-player.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "adm-zip": "^0.5.16",
+    "ws": "^8.18.0",
+    "zod": "^3.23.8",
+    "playwright": "^1.48.0"
+  }
+}

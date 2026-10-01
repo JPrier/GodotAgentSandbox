@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Play — Godot Cloud Kit</title>
+<link rel="stylesheet" href="/static/shell.css">
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="/" title="All projects">◆ gck</a>
+  <span class="proj" id="proj"></span>
+  <span class="pill" id="state" data-s="connecting">connecting</span>
+  <span class="meta" id="build"></span>
+  <span class="spacer"></span>
+  <button id="btn-reload" title="Restart the current build">Restart</button>
+  <button id="btn-build" title="Rebuild on the server">Rebuild</button>
+  <button id="btn-tests" title="Run tests in this browser">Tests</button>
+  <button id="btn-shot" title="Capture a screenshot">Shot</button>
+  <a class="btn" id="btn-editor" href="/editor/" target="_blank" title="Open the Godot web editor">Editor</a>
+</header>
+<main class="layout">
+  <section class="stage" id="stage">
+    <iframe id="game" title="Game" allow="autoplay; fullscreen; gamepad; cross-origin-isolated"></iframe>
+    <div class="overlay" id="overlay" hidden></div>
+    <div class="toast" id="toast" hidden></div>
+  </section>
+  <aside class="console">
+    <div class="console-head">
+      <span>Console</span>
+      <label><input type="checkbox" id="only-errors"> errors only</label>
+      <button id="btn-clear" class="ghost">Clear</button>
+    </div>
+    <ol id="log"></ol>
+  </aside>
+</main>
+<script src="/static/shell.js"></script>
+</body>
+</html>
