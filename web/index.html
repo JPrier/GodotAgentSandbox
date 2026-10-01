@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Godot Cloud Kit</title>
+<link rel="stylesheet" href="/static/shell.css">
+</head>
+<body>
+<div class="wrap">
+  <h1>◆ godot cloud kit</h1>
+  <p class="sub" id="engine">Projects on this server. The agent builds on the server; games run here in your browser.</p>
+  <form class="new" id="new">
+    <input id="new-id" placeholder="new-project-id" pattern="[a-zA-Z0-9][a-zA-Z0-9_-]*" required>
+    <button>Create from template</button>
+  </form>
+  <div class="grid" id="list"></div>
+</div>
+<script>
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+async function load() {
+  const [health, list] = await Promise.all([fetch('/api/health').then(r => r.json()), fetch('/api/projects').then(r => r.json())]);
+  if (health.engine?.version) document.getElementById('engine').textContent = `Godot ${health.engine.version} · ${list.length} project(s). The agent builds on the server; games run here in your browser.`;
+  document.getElementById('list').innerHTML = list.map(p => `
+    <a class="proj-card" href="/play/${encodeURIComponent(p.id)}">
+      <h3>${esc(p.id)}</h3>
+      <p>${p.lastBuild ? `build ${p.lastBuild.n} · ${p.lastBuild.ok ? 'ok' : 'failed'}` : 'not built'} · ${p.sessions.length} live</p>
+    </a>`).join('') || '<p class="sub">No projects yet.</p>';
+}
+document.getElementById('new').onsubmit = async (e) => {
+  e.preventDefault();
+  const id = document.getElementById('new-id').value.trim();
+  const r = await fetch('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, build: false }) });
+  const body = await r.json();
+  if (!r.ok) return alert(body.error);
+  fetch(`/api/projects/${id}/build`, { method: 'POST', body: '{}' });
+  location.href = `/play/${encodeURIComponent(id)}`;
+};
+load();
+</script>
+</body>
+</html>
