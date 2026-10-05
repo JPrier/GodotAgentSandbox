@@ -2,6 +2,8 @@
 
 This repo is a reusable environment for building Godot games: headless Godot on the server,
 rendering in a browser, connected by the bridge server. See README.md for the architecture.
+The `godot-agent-sandbox` skill (`.claude/skills/godot-agent-sandbox/SKILL.md`) has the full workflow;
+users can also save it as a personal skill so sessions without this repo know how to start.
 
 ## Setting up a fresh sandbox (≈10 s)
 
